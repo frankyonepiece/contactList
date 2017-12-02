@@ -1,14 +1,57 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Ionic Blank
+      Call
     </ion-title>
   </ion-navbar>
+  <ion-toolbar no-border-top>
+    <ion-segment [(ngModel)]="pet">
+      <ion-segment-button value="call">
+        Call
+      </ion-segment-button>
+      <ion-segment-button value="Contacts">
+        Contacts
+      </ion-segment-button>
+      <ion-segment-button value="Messages">
+        Messages
+      </ion-segment-button>
+    </ion-segment>
+</ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+  
+  <div [ngSwitch]="pet">
+    <ion-list *ngSwitchCase="'call'" >
+      <ion-item>
+        <ion-label color="primary" floating>Number</ion-label>
+        <ion-input type="tel" [(ngModel)]="phoneNbr"></ion-input>
+      </ion-item>
+      <ion-fab bottom right>
+          <button ion-fab (click)="callnbr()">
+            <ion-icon name="call"></ion-icon>
+          </button>
+        </ion-fab>
+    </ion-list>
+
+    <ion-list *ngSwitchCase="'Contacts'">
+      <ion-item *ngFor="let item of ContactItems">
+        <ion-avatar item-start>
+          <img  src="assets/imgs/franky.jpg">
+        </ion-avatar>
+        <h2>{{item.displayName}}</h2>
+        <p>{{item.phoneNumbers[0].value}}</p>
+      </ion-item>
+    </ion-list>
+
+    <ion-list *ngSwitchCase="'Messages'">
+      <ion-item>
+        <ion-avatar  item-start>
+          <img src="assets/imgs/franky.jpg">
+        </ion-avatar >
+        <h2>Daffy</h2>
+      </ion-item>
+    </ion-list>
+  </div>
+  
 </ion-content>
