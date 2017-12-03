@@ -35,7 +35,7 @@
     </ion-list>
 
     <ion-list *ngSwitchCase="'Contacts'">
-      <ion-item *ngFor="let item of ContactItems">
+      <ion-item *ngFor="let item of ContactItems" (click)="callbyclick(item)">
         <ion-avatar item-start>
           <img  src="assets/imgs/franky.jpg">
         </ion-avatar>
