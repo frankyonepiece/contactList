@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { CallNumber } from '@ionic-native/call-number'
 import { Contacts } from '@ionic-native/contacts';
+import { SMS } from '@ionic-native/SMS'
 
 
 import { MyApp } from './app.component';
@@ -32,7 +33,8 @@ import { ContactsPage } from '../pages/contacts/contacts';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     CallNumber,
-    Contacts
+    Contacts,
+    SMS
   ]
 })
 export class AppModule {}

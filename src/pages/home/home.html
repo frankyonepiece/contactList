@@ -7,20 +7,19 @@
   <ion-toolbar no-border-top>
     <ion-segment [(ngModel)]="pet">
       <ion-segment-button value="call">
-        Call
+        <ion-icon name="keypad"></ion-icon>
       </ion-segment-button>
       <ion-segment-button value="Contacts">
-        Contacts
+          <ion-icon name="contacts"></ion-icon>
       </ion-segment-button>
       <ion-segment-button value="Messages">
-        Messages
+          <ion-icon name="chatbubbles"></ion-icon>
       </ion-segment-button>
     </ion-segment>
 </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-  
   <div [ngSwitch]="pet">
     <ion-list *ngSwitchCase="'call'" >
       <ion-item>
@@ -28,14 +27,19 @@
         <ion-input type="tel" [(ngModel)]="phoneNbr"></ion-input>
       </ion-item>
       <ion-fab bottom right>
-          <button ion-fab (click)="callnbr()">
-            <ion-icon name="call"></ion-icon>
+        <button ion-fab (click)="callnbr()">
+          <ion-icon name="call"></ion-icon>
+        </button>
+      </ion-fab>
+      <ion-fab bottom left>
+          <button ion-fab  color="secondary" (click)="sendMsg()">
+            <ion-icon name="chatbubbles"></ion-icon>
           </button>
         </ion-fab>
     </ion-list>
 
     <ion-list *ngSwitchCase="'Contacts'">
-      <ion-item *ngFor="let item of ContactItems" (click)="callbyclick(item)">
+      <ion-item *ngFor="let item of ContactItems" (click)="showContact(item)">
         <ion-avatar item-start>
           <img  src="assets/imgs/franky.jpg">
         </ion-avatar>
@@ -45,12 +49,11 @@
     </ion-list>
 
     <ion-list *ngSwitchCase="'Messages'">
-      <ion-item>
-        <ion-avatar  item-start>
-          <img src="assets/imgs/franky.jpg">
-        </ion-avatar >
-        <h2>Daffy</h2>
-      </ion-item>
+        <ion-item *ngFor="let sms of smses">
+            <ion-icon name="star" *ngIf="sms.read==0"></ion-icon>
+            <h3>{{sms.address}}</h3>
+            <p>{{sms.body}}</p>
+        </ion-item>
     </ion-list>
   </div>
   

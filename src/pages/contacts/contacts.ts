@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { AlertController  , NavController, NavParams , ViewController , ModalController } from 'ionic-angular';
+import { AlertController  , NavController, NavParams } from 'ionic-angular';
 import { CallNumber } from '@ionic-native/call-number';
-
+import { SMS } from '@ionic-native/SMS'
 
 
 @Component({
@@ -13,14 +13,12 @@ export class ContactsPage {
   phoneNbre:any;
   contactNom:any;
 
-  constructor(public alertCtrl: AlertController , public callCtrl:CallNumber , public navCtrl: NavController, public navParams: NavParams , public viewCtrl: ViewController , public modelCtrl: ModalController) {
+  constructor(public alertCtrl: AlertController , public callCtrl:CallNumber , 
+    public navCtrl: NavController, public navParams: NavParams 
+    , public sms:SMS) {
     const data=this.navParams.get('data');
     this.phoneNbre=data.phoneNumbers[0].value;
     this.contactNom=data.displayName;
-  }
-
-  goback(){
-    this.viewCtrl.dismiss();
   }
   
   
@@ -35,13 +33,13 @@ export class ContactsPage {
       title: 'message',
       inputs: [
         {
-          type:'number',
-          name: 'number',
-          placeholder: 'number'
+          type:'tel',
+          name: 'phone',
+          value:`${this.phoneNbre}`
         },
         {
           type:'textarea',
-          name:'text',
+          name:'msg',
           placeholder: 'your message here'
         },
       ],
@@ -55,11 +53,33 @@ export class ContactsPage {
         {
           text: 'send',
           handler: data => {
-            console.log('send');
-          }
+            try {
+              this.sms.send(String(this.phoneNbre),String(data.msg));
+              alert("messege send")
+            } catch (error) {
+              let alert=this.alertCtrl.create({
+                title:"error",
+                message:`${error}`,
+              });
+              alert.present();
+            }
+          },
         }
       ]
     });
     prompt.present();
   }
+
+  /*sendfun(){
+    try {
+      this.sms.send(String(this.phoneNbre),String(this.smstext));
+      alert("messege send")
+    } catch (error) {
+      let alert=this.alertCtrl.create({
+        title:"error",
+        message:`${error}`,
+      });
+      alert.present();
+    }
+  }*/
 }
